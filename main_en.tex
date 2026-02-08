@@ -1,0 +1,2041 @@
+\documentclass{clgrammar}
+\pagestyle{plain} % Números apenas no rodapé
+
+\title{Logic \& Data Structures}
+\author{Victor Lopes Dos Santos}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\mainmatter
+
+% ======================
+\chapter{Basic Programming Concepts}
+% ======================
+
+\section{What is Programming?}
+Programming is the process of designing and building executable computer programs to accomplish specific tasks. It consists of translating real-world problems into precise instructions that a computer can understand and execute.
+
+At its core, programming involves:
+\begin{itemize}
+    \item \textbf{Problem decomposition}: Breaking a complex problem into smaller, manageable parts.
+    \item \textbf{Algorithm design}: Defining a step-by-step procedure to solve the problem.
+    \item \textbf{Implementation}: Translating the algorithm into a programming language.
+    \item \textbf{Testing and debugging}: Verifying correctness and fixing errors.
+\end{itemize}
+
+Programming requires logical reasoning, abstraction, and attention to detail. A well-written program should not only work correctly but also be readable, efficient, and maintainable.
+
+\section{Compilation vs Interpretation}
+
+Programming languages differ in how their source code is transformed into executable instructions. The two main approaches are compilation and interpretation.
+
+\subsection{Compiled Languages}
+In compiled languages, the entire source code is translated into machine code before execution.
+
+\begin{itemize}
+    \item \textbf{Process}: Source code $\rightarrow$ Compiler $\rightarrow$ Machine code $\rightarrow$ Execution
+    \item \textbf{Examples}: C, C++, Rust, Go, Java (partially)
+    \item \textbf{Advantages}:
+    \begin{itemize}
+        \item Faster execution
+        \item Better performance optimizations
+        \item Errors detected before execution
+    \end{itemize}
+    \item \textbf{Disadvantages}:
+    \begin{itemize}
+        \item Platform-dependent binaries
+        \item Longer compilation time
+    \end{itemize}
+\end{itemize}
+
+\subsection{Interpreted Languages}
+Interpreted languages execute code through an interpreter at runtime. The interpreter reads and executes the source code line by line or in small chunks without a separate compilation step.
+
+\begin{itemize}
+    \item \textbf{Process}: Source code $\rightarrow$ Interpreter $\rightarrow$ Direct execution
+    \item \textbf{Examples}: Python, JavaScript, Ruby, PHP
+    \item \textbf{Advantages}:
+    \begin{itemize}
+        \item Platform independence (run on any system with the interpreter)
+        \item Faster development cycle (no compilation needed)
+        \item Dynamic features (runtime code modification, dynamic typing)
+        \item Easier debugging (immediate error feedback)
+    \end{itemize}
+    \item \textbf{Disadvantages}:
+    \begin{itemize}
+        \item Slower execution (interpretation overhead)
+        \item Errors detected only at runtime
+        \item Less optimization opportunities
+    \end{itemize}
+\end{itemize}
+
+Many modern languages like Python and JavaScript use hybrid approaches with Just-In-Time (JIT) compilation to improve performance.
+
+\subsection{Java's Hybrid Approach}
+Java adopts a hybrid compilation model, combining advantages of both approaches.
+
+Source code (.java) $\rightarrow$ Compiler (javac) $\rightarrow$ Bytecode (.class) $\rightarrow$
+JVM (java) $\rightarrow$ Machine-specific execution
+
+The source code is first compiled into an intermediate representation called \textit{bytecode}. This bytecode is then executed by the Java Virtual Machine (JVM), which translates it into machine code specific to the underlying hardware.
+
+\section{Memory Concepts}
+
+Understanding how memory is organized is fundamental to writing efficient and correct programs.
+
+\subsection{Memory Organization}
+A running program typically uses multiple memory regions, each serving a specific purpose:
+
+\begin{itemize}
+    \item \textbf{Stack}: Stores function calls, parameters, and local variables. Operates in a Last-In-First-Out (LIFO) manner.
+    \item \textbf{Heap}: Stores dynamically allocated memory, such as objects and data structures created at runtime.
+    \item \textbf{Static/Global}: Holds global variables and static fields whose lifetime spans the entire program execution.
+    \item \textbf{Code/Text}: Contains the compiled program instructions.
+\end{itemize}
+
+\subsection{Variables in Memory}
+Different types of variables are stored in different memory regions:
+
+\begin{verbatim}
+int x = 10;         // Stack: stores value 10
+double y = 3.14;    // Stack: stores 3.14
+String s = "Hello"; // Stack: reference, Heap: string object
+\end{verbatim}
+
+Primitive types usually store their values directly, while reference types store memory addresses pointing to objects in the heap.
+
+\section{Syntax, Semantics, and Pragmatics}
+
+Programming languages can be analyzed from three complementary perspectives.
+
+\subsection{Syntax}
+Syntax defines the formal rules that determine which sequences of symbols form valid programs.
+
+\begin{verbatim}
+// Valid syntax
+int x = 10;
+if (x > 5) { ... }
+
+// Invalid syntax
+int x = 10      // Missing semicolon
+if x > 5        // Missing parentheses
+\end{verbatim}
+
+Syntax errors are detected by the compiler or interpreter before execution.
+
+\subsection{Semantics}
+Semantics refers to the meaning of syntactically valid programs. A program can be syntactically correct but semantically incorrect if it doesn't produce the intended behavior.
+
+\begin{verbatim}
+// Semantically correct
+int x = 10;
+int y = x + 5;  // y receives the value 15
+
+// Semantically incorrect examples:
+int a = 10;
+int b = 0;
+int c = a / b;  // Division by zero - runtime error
+
+String str = null;
+int length = str.length();  // NullPointerException
+
+boolean flag = true;
+if (flag = false) {  // Assignment instead of comparison
+    // This block will never execute
+}
+\end{verbatim}
+
+\subsection{Pragmatics}
+Pragmatics concerns how programs are written and used in practice, focusing on practical aspects beyond formal correctness.
+
+\begin{itemize}
+    \item \textbf{Readability and clarity}: Using meaningful names, consistent formatting
+    \item \textbf{Maintainability}: Writing modular, well-documented code
+    \item \textbf{Performance}: Considering time and space efficiency
+    \item \textbf{Security}: Protecting against vulnerabilities
+    \item \textbf{Team collaboration}: Following coding standards and conventions
+\end{itemize}
+
+\section{Basic Program Structure}
+
+\subsection{Minimum Java Program}
+Every Java application must define a class containing a \texttt{main} method, which serves as the program entry point.
+
+\begin{verbatim}
+public class ProgramName {
+    public static void main(String[] args) {
+        // Program execution starts here
+    }
+}
+\end{verbatim}
+
+\subsection{Key Components}
+\begin{itemize}
+    \item \texttt{class}: Defines a blueprint for objects.
+    \item \texttt{main}: Entry point of the program.
+    \item \texttt{public}: Makes the method accessible to the JVM.
+    \item \texttt{static}: Allows execution without creating an object.
+    \item \texttt{void}: Indicates no return value.
+    \item \texttt{String[] args}: Receives command-line arguments.
+\end{itemize}
+
+\section{Development Tools}
+
+\subsection{Integrated Development Environment (IDE)}
+An IDE provides comprehensive tools to assist software development:
+
+\begin{itemize}
+    \item Code editor with syntax highlighting and autocompletion
+    \item Compiler and interpreter integration
+    \item Debugging tools with breakpoints and variable inspection
+    \item Version control support (Git integration)
+    \item Project and dependency management
+    \ref testing frameworks integration
+\end{itemize}
+
+Popular Java IDEs include IntelliJ IDEA, Eclipse, and NetBeans.
+
+\subsection{Command Line Interface (CLI)}
+The Command Line Interface (CLI) is a text-based interface where users type commands to perform tasks. It's a powerful tool for developers because it allows precise control and automation of tasks. The basic CLI usage are:
+
+\begin{itemize}
+    \item Commands are typed in a terminal or command prompt
+    \item Each command performs a specific action
+    \item Commands can be combined and automated
+\end{itemize}
+
+\subsubsection{Java CLI Tools}
+Java includes several command-line tools for development:
+
+\begin{verbatim}
+# Compile Java source code
+javac Program.java
+
+# Run compiled Java program
+java Program
+
+# Create documentation
+javadoc Program.java
+
+# Package into JAR file
+jar cvf program.jar *.class
+\end{verbatim}
+
+Learning to use the CLI effectively can make you a more efficient developer, especially when working with servers, automation, or complex build processes.
+\section{Data Types and Type Systems}
+
+A \textbf{data type} specifies the kind of values that can be stored and the operations that can be performed on them.
+
+Common data type categories include:
+\begin{itemize}
+    \item \textbf{Primitive types}: integers, floating-point numbers, characters, booleans
+    \item \textbf{Composite types}: arrays, records, structures
+    \item \textbf{Reference types}: objects, strings, collections
+\end{itemize}
+
+A \textbf{type system} enforces rules governing how different types interact, helping detect errors and improve program reliability.
+
+\subsection{Static vs Dynamic Typing}
+\begin{itemize}
+    \item \textbf{Static typing}: Types are checked at compile time (e.g., Java, C++).
+    \item \textbf{Dynamic typing}: Types are checked at runtime (e.g., Python, JavaScript).
+\end{itemize}
+
+\section{Variables, Constants, and Scope}
+
+A \textbf{variable} is a named memory location whose value may change during execution. A \textbf{constant} represents a fixed value that cannot be altered after initialization.
+
+\begin{verbatim}
+final int MAX = 100;
+int counter = 0;
+\end{verbatim}
+
+\subsection{Scope and Lifetime}
+Scope defines where a variable is accessible, while lifetime determines how long it exists in memory.
+
+\begin{itemize}
+    \item \textbf{Local scope}: Variables declared inside methods or blocks.
+    \item \textbf{Class or global scope}: Variables accessible throughout a class or program.
+\end{itemize}
+
+\section{Expressions and Operators}
+
+An \textbf{expression} combines variables, literals, and operators to produce a value.
+
+\begin{verbatim}
+int result = (a + b) * c;
+\end{verbatim}
+
+Operators are commonly classified as:
+\begin{itemize}
+    \item Arithmetic operators: \texttt{+ - * / \%}
+    \item Relational operators: \texttt{== != > < >= <=}
+    \item Logical operators: \texttt{\&\& || !}
+    \item Assignment operators: \texttt{= += -= *=}
+\end{itemize}
+
+Operator precedence and associativity determine the order of evaluation in expressions.
+
+\section{Control Structures}
+
+Control structures determine the flow of execution in a program by allowing selective and repetitive execution of code blocks.
+
+\subsection{Sequential Execution}
+Instructions are executed in the order they appear unless altered by control structures.
+
+\subsection{Conditional Statements}
+Conditional statements allow decision-making based on logical expressions.
+
+\begin{verbatim}
+if (x > 0) {
+    // positive
+} else if (x < 0) {
+    // negative
+} else {
+    // zero
+}
+\end{verbatim}
+
+\subsection{Repetition Structures}
+Loops allow repeated execution of code blocks.
+
+\begin{verbatim}
+for (int i = 0; i < 10; i++) {
+    // repeated 10 times
+}
+
+while (condition) {
+    // repeated while condition is true
+}
+
+do {
+    // executed at least once
+} while (condition);
+\end{verbatim}
+
+\section{Functions and Methods}
+
+Functions (or methods) encapsulate reusable units of behavior and promote modularity.
+
+\begin{verbatim}
+int sum(int a, int b) {
+    return a + b;
+}
+\end{verbatim}
+
+Functions improve:
+\begin{itemize}
+    \item Code reuse
+    \item Abstraction
+    \item Program organization
+    \item Testability
+\end{itemize}
+
+\section{Input and Output}
+
+Input and Output (I/O) mechanisms enable programs to interact with users and external systems.
+
+\begin{verbatim}
+Scanner sc = new Scanner(System.in);
+int value = sc.nextInt();
+System.out.println(value);
+\end{verbatim}
+
+I/O operations may involve:
+\begin{itemize}
+    \item Standard input and output
+    \item Files
+    \item External devices or networks
+\end{itemize}
+
+\section{Language Idioms}
+
+Programming idioms are recurring patterns of code that represent the most natural, efficient, and readable way to accomplish common tasks within a specific programming language. These patterns emerge from the language's design philosophy, syntax characteristics, and community conventions over time.
+
+\subsection{Characteristics of Language Idioms}
+\begin{itemize}
+    \item \textbf{Expressiveness}: Idioms allow complex operations to be written concisely while maintaining clarity
+    \item \textbf{Performance}: Idiomatic code often leverages language optimizations and avoids common pitfalls
+    \item \textbf{Maintainability}: Following established idioms makes code more predictable for other developers
+    \item \textbf{Cultural Alignment}: Idioms reflect the programming community's shared understanding and best practices
+\end{itemize}
+
+\subsection{Java Idioms Examples}
+\begin{verbatim}
+// Enhanced for loop (for-each) for collections
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+for (String name : names) {
+    System.out.println(name);
+}
+
+// Try-with-resources for automatic resource management
+try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
+    String line = reader.readLine();
+}
+
+// Builder pattern for complex object creation
+Person person = new Person.Builder()
+    .name("John")
+    .age(30)
+    .address("123 Main St")
+    .build();
+
+// Factory methods for immutable collections
+List<String> list = List.of("a", "b", "c");
+Set<Integer> set = Set.of(1, 2, 3);
+
+// Optional for null-safe value handling
+Optional<String> optional = Optional.ofNullable(getString());
+String result = optional.orElse("default");
+\end{verbatim}
+
+\section{Programming Paradigms}
+
+A programming paradigm is a fundamental style of computer programming that defines how programmers structure and organize code. Paradigms provide different approaches to problem decomposition, data organization, and control flow management.
+
+\subsection{Imperative Programming}
+\begin{itemize}
+    \item \textbf{Philosophy}: Focuses on \emph{how} to achieve results through explicit commands
+    \item \textbf{Characteristics}: Sequence of statements that change program state
+    \item \textbf{Key Concepts}: Variables, assignment, loops, conditionals
+    \item \textbf{Example Languages}: C, Pascal, early versions of BASIC
+\end{itemize}
+
+\begin{verbatim}
+// Imperative approach to sum an array
+int sum = 0;
+for (int i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+}
+\end{verbatim}
+
+\subsection{Procedural Programming}
+\begin{itemize}
+    \item \textbf{Philosophy}: Extends imperative programming with procedures/functions
+    \item \textbf{Characteristics}: Programs organized into reusable procedures
+    \item \textbf{Key Concepts}: Functions, parameters, local variables, modularity
+    \item \textbf{Example Languages}: C, Pascal, Fortran
+\end{itemize}
+
+\begin{verbatim}
+// Procedural approach with functions
+public int calculateSum(int[] numbers) {
+    int sum = 0;
+    for (int num : numbers) {
+        sum += num;
+    }
+    return sum;
+}
+
+public double calculateAverage(int[] numbers) {
+    return calculateSum(numbers) / (double) numbers.length;
+}
+\end{verbatim}
+
+\subsection{Object-Oriented Programming (OOP)}
+\begin{itemize}
+    \item \textbf{Philosophy}: Models real-world entities as objects with state and behavior
+    \item \textbf{Characteristics}: Encapsulation, inheritance, polymorphism, abstraction
+    \item \textbf{Key Concepts}: Classes, objects, methods, interfaces, inheritance
+    \item \textbf{Example Languages}: Java, C++, Python, C\#
+\end{itemize}
+
+\begin{verbatim}
+// OOP approach with classes and objects
+public class BankAccount {
+    private double balance;
+    
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+    
+    public double getBalance() {
+        return balance;
+    }
+}
+
+// Usage
+BankAccount account = new BankAccount(1000);
+account.deposit(500);
+\end{verbatim}
+
+\subsection{Functional Programming}
+\begin{itemize}
+    \item \textbf{Philosophy}: Treats computation as evaluation of mathematical functions
+    \item \textbf{Characteristics}: Immutable data, first-class functions, no side effects
+    \item \textbf{Key Concepts}: Pure functions, higher-order functions, recursion
+    \item \textbf{Example Languages}: Haskell, Lisp, Scala, JavaScript (supports)
+\end{itemize}
+
+\begin{verbatim}
+// Functional approach in Java (using Streams)
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+int sum = numbers.stream()
+                .filter(n -> n % 2 == 0)      // Keep even numbers
+                .map(n -> n * 2)              // Double them
+                .reduce(0, Integer::sum);     // Sum all values
+\end{verbatim}
+
+\subsection{Multi-Paradigm Languages}
+Most modern programming languages support multiple paradigms, allowing developers to choose the most appropriate approach for each problem:
+
+\begin{itemize}
+    \item \textbf{Java}: Primarily OOP, but supports imperative, procedural, and functional (via Streams)
+    \item \textbf{Python}: Supports OOP, imperative, procedural, and functional paradigms
+    \item \textbf{JavaScript}: Supports OOP, imperative, procedural, and functional paradigms
+    \item \textbf{Scala}: Blends OOP and functional programming seamlessly
+    \item \textbf{C++}: Supports OOP, imperative, procedural, and generic programming
+\end{itemize}
+
+% ======================
+\chapter{Programming Concepts}
+% ======================
+
+\section{Variables and Data Types}
+\subsection{Variable Declaration and Scope}
+\begin{verbatim}
+// Local variables (method scope)
+public void method() {
+    int localVar = 10;  // Only accessible within method
+}
+
+// Instance variables (object scope)
+public class MyClass {
+    private int instanceVar;  // Each object has its own copy
+}
+
+// Class variables (class scope)
+public class MyClass {
+    private static int classVar;  // Shared by all objects
+}
+\end{verbatim}
+
+\subsection{Data Type Hierarchy}
+Java data types are organized in a hierarchical structure:
+
+\begin{itemize}
+    \item \textbf{Primitive Types}
+    \begin{itemize}
+        \item \textbf{Integer types}: byte (8-bit), short (16-bit), int (32-bit), long (64-bit)
+        \item \textbf{Floating-point}: float (32-bit), double (64-bit)
+        \item \textbf{Character}: char (16-bit Unicode)
+        \item \textbf{Boolean}: boolean (true/false)
+    \end{itemize}
+    \item \textbf{Reference Types}
+    \begin{itemize}
+        \item \textbf{Classes}: String, Object, custom classes
+        \item \textbf{Arrays}: Single and multi-dimensional
+        \item \textbf{Interfaces}: Runnable, Comparable, List
+        \item \textbf{Enumerations}: Enum types
+    \end{itemize}
+\end{itemize}
+
+\subsection{Type Conversion and Casting}
+\begin{verbatim}
+// Implicit conversion (widening) - no data loss
+int i = 100;
+long l = i;           // OK: int to long
+double d = i;         // OK: int to double
+
+// Explicit casting (narrowing) - potential data loss
+double price = 19.99;
+int intPrice = (int) price;  // 19 (truncation)
+long big = 10000000000L;
+int small = (int) big;       // Possible overflow
+
+// Special cases
+char c = 'A';
+int ascii = c;               // 65 (ASCII value)
+boolean flag = true;
+// int num = (int) flag;     // ERROR: cannot cast boolean to int
+
+// String conversions
+int num = Integer.parseInt("123");
+String str = String.valueOf(456);
+\end{verbatim}
+
+\section{Expressions and Statements}
+\subsection{Expression Evaluation}
+\begin{verbatim}
+// Complex expression with precedence
+int result = (a + b) * c / d % e;
+
+// Multiple assignments
+int x = 5, y = 10, z = 15;
+
+// Expression with side effects
+int count = 0;
+int value = ++count * 2;  // count=1, value=2
+
+// Compound assignment
+x += 5;    // Equivalent to x = x + 5
+x *= y;    // Equivalent to x = x * y
+\end{verbatim}
+
+\subsection{Statement Types}
+\begin{itemize}
+    \item \textbf{Declaration}: \texttt{int x;}
+    \item \textbf{Assignment}: \texttt{x = 10;}
+    \item \textbf{Method call}: \texttt{System.out.println("Hello");}
+    \item \textbf{Control flow}: \texttt{if, for, while, switch, etc.}
+    \item \textbf{Block}: \texttt{\{ statements \}}
+    \item \textbf{Return}: \texttt{return value;}
+    \item \textbf{Break/Continue}: Alter loop execution
+\end{itemize}
+
+% Review Questions for Chapter 2
+\section*{Review Questions: Chapter 2}
+\begin{enumerate}
+    \item Explain the different variable scopes in Java with examples. When would you use each?
+    
+    \item Compare primitive types and reference types. What are the implications for memory and performance?
+    
+    \item Given the expression: \texttt{int x = 5 + 3 * 2 / (4 - 2);} What is the value of x? Show the step-by-step evaluation.
+    
+    \item Write a program that demonstrates all compound assignment operators and show the results.
+    
+    % Question 5 removed
+    
+    \item What is type casting? When is implicit casting allowed and when is explicit casting required?
+    
+    \item Write code that converts between: int and double, char and int, boolean and String.
+    
+    % Question 8 removed
+\end{enumerate}
+
+% ======================
+\chapter{Decision Structures}
+% ======================
+
+\section{Conditional Logic}
+\subsection{Boolean Algebra Fundamentals}
+\begin{itemize}
+    \item \textbf{Identity Laws}: 
+        $A \land true = A$, $A \lor false = A$
+    \item \textbf{Domination Laws}: 
+        $A \land false = false$, $A \lor true = true$
+    \item \textbf{Idempotent Laws}: 
+        $A \land A = A$, $A \lor A = A$
+    \item \textbf{Double Negation}: 
+        $\lnot(\lnot A) = A$
+    \item \textbf{De Morgan's Laws}: 
+        $\lnot(A \land B) = \lnot A \lor \lnot B$,
+        $\lnot(A \lor B) = \lnot A \land \lnot B$
+\end{itemize}
+
+\subsection{Complex Conditional Expressions}
+\begin{verbatim}
+// Multiple conditions with proper grouping
+if ((age >= 18 && hasLicense) || (age >= 16 && withParent)) {
+    // Can drive
+}
+
+// Nested conditions simplified
+boolean canVote = age >= 18 && isCitizen && !hasFelony;
+boolean canDrink = age >= 21 && !isSoberDriveSuspended;
+\end{verbatim}
+
+\section{If-Else Structures}
+\subsection{Chained If-Else-If}
+\begin{verbatim}
+if (score >= 90) {
+    grade = 'A';
+} else if (score >= 80) {
+    grade = 'B';
+} else if (score >= 70) {
+    grade = 'C';
+} else if (score >= 60) {
+    grade = 'D';
+} else {
+    grade = 'F';
+}
+
+// Equivalent using ternary (less readable)
+grade = (score >= 90) ? 'A' :
+        (score >= 80) ? 'B' :
+        (score >= 70) ? 'C' :
+        (score >= 60) ? 'D' : 'F';
+\end{verbatim}
+
+\subsection{Switch Statement Details}
+\begin{verbatim}
+// Traditional switch (pre-Java 14)
+switch (month) {
+    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+        days = 31;
+        break;
+    case 4: case 6: case 9: case 11:
+        days = 30;
+        break;
+    case 2:
+        days = isLeapYear ? 29 : 28;
+        break;
+    default:
+        throw new IllegalArgumentException("Invalid month");
+}
+
+// Switch expression (Java 14+)
+String season = switch (month) {
+    case 12, 1, 2 -> "Winter";
+    case 3, 4, 5 -> "Spring";
+    case 6, 7, 8 -> "Summer";
+    case 9, 10, 11 -> "Fall";
+    default -> {
+        System.err.println("Invalid month: " + month);
+        yield "Invalid";
+    }
+};
+
+// Switch with pattern matching (Java 21 preview)
+String description = switch (obj) {
+    case Integer i -> "Integer: " + i;
+    case String s -> "String: " + s;
+    case null -> "Null object";
+    default -> "Unknown type";
+};
+\end{verbatim}
+
+\section{Pattern Matching}
+Pattern matching simplifies common coding patterns by combining type checking and variable assignment.
+
+\subsection{Type Patterns (Java 16+)}
+\begin{verbatim}
+Object obj = "Hello";
+
+// Traditional approach
+if (obj instanceof String) {
+    String s = (String) obj;
+    System.out.println(s.length());
+}
+
+// Pattern matching
+if (obj instanceof String s) {
+    System.out.println(s.length());  // s is automatically cast
+    // s is in scope here
+}
+
+// Can be used in while loops
+while (obj instanceof String s && s.length() > 0) {
+    System.out.println(s.charAt(0));
+    obj = s.substring(1);
+}
+\end{verbatim}
+
+% Review Questions for Chapter 3
+\section*{Review Questions: Chapter 3}
+\begin{enumerate}
+    \item Simplify the boolean expression: \texttt{!(a \&\& b) || (!a \&\& !b) || (a \&\& !b)}
+    
+    % Question 2 removed
+    % Question 3 removed
+    
+    \item Given three numbers, write code to find the maximum without using Math.max().
+    
+    % Question 5 removed
+    
+    \item Explain the difference between deep and shallow equality for objects. How does this apply to Strings?
+    
+    \item Write a program that validates a date (day, month, year) considering leap years.
+    
+    % Question 8 removed
+\end{enumerate}
+
+% ======================
+\chapter{Repetition Structures}
+% ======================
+
+\section{Loop Patterns}
+Common loop patterns provide reusable templates for solving recurring problems.
+
+\subsection{Accumulator Pattern}
+Used to accumulate values through iteration:
+
+\begin{verbatim}
+// Sum of array elements
+int[] numbers = {1, 2, 3, 4, 5};
+int sum = 0;
+
+for (int num : numbers) {
+    sum += num;  // Accumulate
+}
+System.out.println("Sum: " + sum);
+
+// Product accumulation
+double[] values = {1.5, 2.0, 3.5, 4.0};
+double product = 1.0;
+for (double val : values) {
+    product *= val;
+}
+
+// String concatenation accumulator
+String[] words = {"Hello", " ", "World", "!"};
+StringBuilder message = new StringBuilder();
+for (String word : words) {
+    message.append(word);
+}
+\end{verbatim}
+
+\subsection{Search Pattern}
+Used to find elements matching specific criteria:
+
+\begin{verbatim}
+// Linear search
+int[] array = {10, 20, 30, 40, 50};
+int target = 30;
+boolean found = false;
+int index = -1;
+
+for (int i = 0; i < array.length; i++) {
+    if (array[i] == target) {
+        found = true;
+        index = i;
+        break;  // Early exit
+    }
+}
+
+// Find maximum value
+int max = Integer.MIN_VALUE;
+for (int value : array) {
+    if (value > max) {
+        max = value;
+    }
+}
+
+// Find all matches
+List<Integer> matches = new ArrayList<>();
+for (int value : array) {
+    if (value > 25) {
+        matches.add(value);
+    }
+}
+\end{verbatim}
+
+\subsection{Count-Controlled vs Event-Controlled Loops}
+\begin{verbatim}
+// Count-controlled (definite iteration) - known number of iterations
+for (int i = 0; i < 10; i++) {
+    System.out.println("Iteration: " + i);
+}
+
+// Event-controlled (indefinite iteration) - depends on conditions
+Scanner scanner = new Scanner(System.in);
+String input;
+do {
+    System.out.print("Enter 'quit' to exit: ");
+    input = scanner.nextLine();
+    // Process input
+} while (!input.equalsIgnoreCase("quit"));
+
+// While loop for reading until sentinel value
+int sum = 0;
+int value;
+while ((value = scanner.nextInt()) != -1) {
+    sum += value;
+}
+\end{verbatim}
+
+\section{Nested Loops}
+\subsection{Multiplication Table}
+\begin{verbatim}
+for (int i = 1; i <= 10; i++) {
+    for (int j = 1; j <= 10; j++) {
+        System.out.printf("%4d", i * j);
+    }
+    System.out.println();  // New line after each row
+}
+
+// Output:
+//   1   2   3   4   5   6   7   8   9  10
+//   2   4   6   8  10  12  14  16  18  20
+//   ... etc
+\end{verbatim}
+
+\subsection{Pattern Generation}
+\begin{verbatim}
+// Right triangle pattern
+int n = 5;
+for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= i; j++) {
+        System.out.print("* ");
+    }
+    System.out.println();
+}
+
+// Output:
+// * 
+// * * 
+// * * * 
+// * * * * 
+// * * * * * 
+
+// Pyramid pattern
+for (int i = 1; i <= n; i++) {
+    // Print spaces
+    for (int j = 1; j <= n - i; j++) {
+        System.out.print("  ");
+    }
+    // Print stars
+    for (int j = 1; j <= 2 * i - 1; j++) {
+        System.out.print("* ");
+    }
+    System.out.println();
+}
+\end{verbatim}
+
+\section{Loop Optimization}
+\subsection{Loop Invariant Code Motion}
+Move calculations that don't change inside the loop to outside:
+
+\begin{verbatim}
+// BEFORE: Calculation inside loop
+for (int i = 0; i < array.length; i++) {
+    double result = Math.PI * radius * array[i];  // Math.PI * radius is invariant
+}
+
+// AFTER: Move invariant outside loop
+double constant = Math.PI * radius;
+for (int i = 0; i < array.length; i++) {
+    double result = constant * array[i];  // Faster
+}
+
+// BEFORE: Method call in loop condition
+for (int i = 0; i < list.size(); i++) {  // size() called each iteration
+    // ...
+}
+
+// AFTER: Cache size
+int size = list.size();
+for (int i = 0; i < size; i++) {
+    // ...
+}
+\end{verbatim}
+
+\subsection{Loop Unrolling}
+Reduce loop overhead by processing multiple elements per iteration:
+
+\begin{verbatim}
+// Standard loop
+int sum = 0;
+for (int i = 0; i < 100; i++) {
+    sum += array[i];
+}
+
+// Partially unrolled (process 4 elements per iteration)
+int sum = 0;
+for (int i = 0; i < 100; i += 4) {
+    sum += array[i] + array[i+1] + array[i+2] + array[i+3];
+}
+// Handle remaining elements (if any)
+for (int i = 96; i < 100; i++) {
+    sum += array[i];
+}
+\end{verbatim}
+
+\section{Recursion vs Iteration}
+\subsection{Factorial Comparison}
+\begin{verbatim}
+// Iterative factorial (preferred in Java)
+int factorialIterative(int n) {
+    if (n < 0) throw new IllegalArgumentException();
+    int result = 1;
+    for (int i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+// Recursive factorial (simpler but less efficient)
+int factorialRecursive(int n) {
+    if (n < 0) throw new IllegalArgumentException();
+    if (n <= 1) return 1;
+    return n * factorialRecursive(n - 1);
+}
+
+// Tail-recursive factorial (Java doesn't optimize tail calls)
+int factorialTail(int n, int accumulator) {
+    if (n <= 1) return accumulator;
+    return factorialTail(n - 1, n * accumulator);
+}
+// Wrapper method
+int factorial(int n) {
+    return factorialTail(n, 1);
+}
+\end{verbatim}
+
+\subsection{When to Use Recursion}
+\begin{itemize}
+    \item \textbf{Use recursion for}:
+    \begin{itemize}
+        \item Tree/graph traversals
+        \item Divide-and-conquer algorithms
+        \item Problems with recursive mathematical definitions
+    \end{itemize}
+    \item \textbf{Use iteration for}:
+    \begin{itemize}
+        \item Simple linear processing
+        \item Performance-critical code
+        \item Deep recursion that might cause stack overflow
+    \end{itemize}
+\end{itemize}
+
+% Review Questions for Chapter 4
+\section*{Review Questions: Chapter 4}
+\begin{enumerate}
+    \item Compare and contrast for, while, and do-while loops. When should each be used?
+    
+    \item Write a program that prints the first 20 Fibonacci numbers using three different loop types.
+    
+    \item Implement bubble sort and analyze its time complexity in terms of Big O notation.
+    
+    \item Write a program that finds all prime numbers between 1 and 100 using the Sieve of Eratosthenes algorithm.
+    
+    \item Explain loop optimization techniques with concrete examples.
+    
+    \item Compare iterative and recursive approaches for calculating factorial. Which is more efficient and why?
+    
+    \item Write a program that reverses an array in-place (without creating a new array).
+    
+    \item Implement binary search and compare its efficiency with linear search.
+\end{enumerate}
+
+% ======================
+\chapter{Basic Data Structures}
+% ======================
+
+\section{Arrays}
+\subsection{Array Declaration Variations}
+\begin{verbatim}
+// One-dimensional arrays
+int[] arr1 = new int[5];           // All zeros [0,0,0,0,0]
+int[] arr2 = {1, 2, 3, 4, 5};     // Initialized
+int[] arr3 = new int[]{1, 2, 3};  // Alternative syntax
+
+// Multi-dimensional arrays
+int[][] matrix1 = new int[3][4];   // 3x4 matrix (all zeros)
+int[][] matrix2 = {{1,2}, {3,4}}; // 2x2 matrix
+int[][] jagged = new int[3][];     // Jagged array (ragged)
+jagged[0] = new int[2];            // First row has 2 columns
+jagged[1] = new int[3];            // Second row has 3 columns
+jagged[2] = new int[1];            // Third row has 1 column
+
+// Array of objects
+String[] names = new String[3];
+names[0] = "Alice";
+names[1] = "Bob";
+names[2] = "Charlie";
+\end{verbatim}
+
+\subsection{Array Algorithms}
+\subsubsection{Bubble Sort}
+\begin{verbatim}
+void bubbleSort(int[] arr) {
+    int n = arr.length;
+    boolean swapped;
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j+1]
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        // If no swaps, array is sorted
+        if (!swapped) break;
+    }
+}
+\end{verbatim}
+
+\subsubsection{Binary Search}
+\begin{verbatim}
+int binarySearch(int[] arr, int target) {
+    int left = 0;
+    int right = arr.length - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;  // Avoid overflow
+        
+        if (arr[mid] == target) {
+            return mid;  // Found
+        } else if (arr[mid] < target) {
+            left = mid + 1;  // Search right half
+        } else {
+            right = mid - 1;  // Search left half
+        }
+    }
+    return -1;  // Not found
+}
+
+// Recursive version
+int binarySearchRecursive(int[] arr, int target, int left, int right) {
+    if (left > right) return -1;
+    
+    int mid = left + (right - left) / 2;
+    if (arr[mid] == target) return mid;
+    if (arr[mid] < target) 
+        return binarySearchRecursive(arr, target, mid + 1, right);
+    else 
+        return binarySearchRecursive(arr, target, left, mid - 1);
+}
+\end{verbatim}
+
+\subsection{Array Utilities}
+\begin{verbatim}
+import java.util.Arrays;
+import java.util.Collections;
+
+int[] arr = {5, 2, 8, 1, 9};
+
+// Sorting
+Arrays.sort(arr);                  // Ascending: {1, 2, 5, 8, 9}
+Arrays.sort(arr, 1, 4);           // Sort subset [1,4)
+
+// Searching (array must be sorted)
+int index = Arrays.binarySearch(arr, 5);  // 2
+
+// Filling
+Arrays.fill(arr, 0);              // {0, 0, 0, 0, 0}
+Arrays.fill(arr, 1, 3, 99);       // Fill positions 1-2 with 99
+
+// Copying
+int[] copy = Arrays.copyOf(arr, arr.length);
+int[] range = Arrays.copyOfRange(arr, 1, 4);  // Elements 1-3
+
+// Comparing
+boolean equal = Arrays.equals(arr1, arr2);
+int compare = Arrays.compare(arr1, arr2);  // Lexicographic
+
+// Streaming
+int sum = Arrays.stream(arr).sum();
+double avg = Arrays.stream(arr).average().orElse(0);
+\end{verbatim}
+
+\section{ArrayLists (Introduction)}
+\subsection{Basic Operations}
+\begin{verbatim}
+import java.util.ArrayList;
+import java.util.Collections;
+
+ArrayList<Integer> list = new ArrayList<>();
+
+// Adding elements
+list.add(10);                     // [10]
+list.add(20);                     // [10, 20]
+list.add(1, 15);                  // [10, 15, 20] - insert at index 1
+list.addAll(Arrays.asList(30, 40)); // [10, 15, 20, 30, 40]
+
+// Accessing elements
+int first = list.get(0);          // 10
+int size = list.size();           // 5
+boolean contains = list.contains(20); // true
+int index = list.indexOf(20);     // 2
+int lastIndex = list.lastIndexOf(20); // 2
+
+// Modifying elements
+list.set(1, 25);                  // [10, 25, 20, 30, 40]
+list.replaceAll(x -> x * 2);      // [20, 50, 40, 60, 80]
+
+// Removing elements
+list.remove(0);                   // Remove first: [50, 40, 60, 80]
+list.remove(Integer.valueOf(40)); // Remove by value: [50, 60, 80]
+list.removeIf(x -> x > 70);       // Remove if >70: [50, 60]
+list.clear();                     // Empty list
+
+// Iterating
+for (int num : list) {
+    System.out.println(num);
+}
+
+for (int i = 0; i < list.size(); i++) {
+    System.out.println(list.get(i));
+}
+
+list.forEach(System.out::println);  // Method reference
+\end{verbatim}
+
+\subsection{ArrayList vs Array}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Feature} & \textbf{Array} & \textbf{ArrayList} \\
+\hline
+Size & Fixed at creation & Dynamic (grows/shrinks automatically) \\
+\hline
+Performance & Faster access (direct indexing) & Slightly slower (bounds checking) \\
+\hline
+Type safety & Compile-time (for primitives) & Runtime (generics, type erasure) \\
+\hline
+Memory & Less overhead & More overhead (object wrapper) \\
+\hline
+Methods & Limited (length field) & Rich API (add, remove, sort, etc.) \\
+\hline
+Primitives & Direct support & Requires wrapper classes (Integer, etc.) \\
+\hline
+Multi-dimensional & Supported & Lists of Lists \\
+\hline
+\end{tabular}
+
+\section{Common Data Structure Problems}
+\subsection{Two Sum Problem}
+Find two numbers that sum to a target value:
+
+\begin{verbatim}
+// Brute force approach: O(n²) time, O(1) space
+int[] twoSumBruteForce(int[] nums, int target) {
+    for (int i = 0; i < nums.length; i++) {
+        for (int j = i + 1; j < nums.length; j++) {
+            if (nums[i] + nums[j] == target) {
+                return new int[]{i, j};
+            }
+        }
+    }
+    return new int[]{-1, -1};
+}
+
+// Optimized using HashMap: O(n) time, O(n) space
+int[] twoSumHashMap(int[] nums, int target) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        int complement = target - nums[i];
+        if (map.containsKey(complement)) {
+            return new int[]{map.get(complement), i};
+        }
+        map.put(nums[i], i);
+    }
+    return new int[]{-1, -1};
+}
+\end{verbatim}
+
+\subsection{Maximum Subarray}
+Find the contiguous subarray with the largest sum (Kadane's Algorithm):
+
+\begin{verbatim}
+// Kadane's Algorithm: O(n) time, O(1) space
+int maxSubArray(int[] nums) {
+    if (nums.length == 0) return 0;
+    
+    int maxSoFar = nums[0];
+    int maxEndingHere = nums[0];
+    
+    for (int i = 1; i < nums.length; i++) {
+        // Either extend the previous subarray or start new
+        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
+        maxSoFar = Math.max(maxSoFar, maxEndingHere);
+    }
+    
+    return maxSoFar;
+}
+
+// Version that also returns the subarray indices
+int[] maxSubArrayWithIndices(int[] nums) {
+    int maxSoFar = nums[0], maxEndingHere = nums[0];
+    int start = 0, end = 0, tempStart = 0;
+    
+    for (int i = 1; i < nums.length; i++) {
+        if (nums[i] > maxEndingHere + nums[i]) {
+            maxEndingHere = nums[i];
+            tempStart = i;
+        } else {
+            maxEndingHere = maxEndingHere + nums[i];
+        }
+        
+        if (maxEndingHere > maxSoFar) {
+            maxSoFar = maxEndingHere;
+            start = tempStart;
+            end = i;
+        }
+    }
+    
+    return new int[]{maxSoFar, start, end};
+}
+\end{verbatim}
+
+% Review Questions for Chapter 5
+\section*{Review Questions: Chapter 5}
+\begin{enumerate}
+    \item Explain the difference between arrays and ArrayLists. When would you choose one over the other?
+    
+    \item Implement a method that rotates an array by k positions to the right.
+    
+    \item Write a program that finds the most frequent element in an array.
+    
+    % Question 4 removed
+    % Question 5 removed
+    
+    \item Implement Kadane's algorithm to find the maximum subarray sum.
+    
+    \item Write a program that merges two sorted arrays into a single sorted array.
+    
+    \item Explain how multi-dimensional arrays are stored in memory.
+    
+    % Question 8 removed
+\end{enumerate}
+
+% ======================
+\chapter{String Manipulation}
+% ======================
+
+\section{String Fundamentals}
+\subsection{String Creation}
+\begin{verbatim}
+// Different ways to create strings
+String s1 = "Hello";                    // String literal (from string pool)
+String s2 = new String("Hello");        // Using constructor (new object)
+char[] chars = {'H','e','l','l','o'};
+String s3 = new String(chars);          // From char array
+String s4 = String.valueOf(123);        // From other types
+String s5 = String.format("Value: %d", 42);  // Formatted string
+
+// String concatenation
+String concat1 = "Hello" + " " + "World";  // "Hello World"
+String concat2 = "Result: " + 42;          // "Result: 42"
+
+// Important: String immutability
+String s = "Hello";
+s = s + " World";  // Creates new string "Hello World", doesn't modify "Hello"
+\end{verbatim}
+
+\subsection{String Pool}
+Java maintains a string pool to reuse immutable string objects:
+
+\begin{verbatim}
+String s1 = "Hello";        // Goes to string pool
+String s2 = "Hello";        // Reuses from pool (s1 == s2 is true)
+String s3 = new String("Hello");  // New object (s1 == s3 is false)
+String s4 = s3.intern();    // Adds to pool or returns existing
+
+// == compares references, equals() compares content
+System.out.println(s1 == s2);        // true (same reference)
+System.out.println(s1.equals(s2));   // true (same content)
+System.out.println(s1 == s3);        // false (different references)
+System.out.println(s1.equals(s3));   // true (same content)
+System.out.println(s1 == s4);        // true (s4 is interned)
+\end{verbatim}
+
+\section{String Methods}
+\subsection{Basic Operations}
+\begin{verbatim}
+String str = "  Hello World  ";
+
+// Length and emptiness
+int len = str.length();           // 15 (includes spaces)
+boolean empty = str.isEmpty();    // false
+boolean blank = str.isBlank();    // false (Java 11+) - checks if empty or whitespace
+
+// Character access
+char first = str.charAt(2);       // 'H' (index 2, after spaces)
+char last = str.charAt(str.length() - 1);  // ' ' (last space)
+
+// Substrings
+String sub1 = str.substring(2);       // "Hello World  "
+String sub2 = str.substring(2, 7);    // "Hello"
+String sub3 = str.substring(8, 13);   // "World"
+
+// Case conversion
+String upper = str.toUpperCase();    // "  HELLO WORLD  "
+String lower = str.toLowerCase();    // "  hello world  "
+
+// Trimming
+String trimmed = str.trim();         // "Hello World" (removes leading/trailing spaces)
+String strip = str.strip();          // "Hello World" (Java 11+, Unicode-aware)
+String stripLeading = str.stripLeading();  // "Hello World  "
+String stripTrailing = str.stripTrailing();// "  Hello World"
+\end{verbatim}
+
+\subsection{Searching and Comparing}
+\begin{verbatim}
+String str = "Hello World";
+
+// Searching
+int index1 = str.indexOf('o');        // 4 (first 'o')
+int index2 = str.indexOf('o', 5);     // 7 (start from index 5)
+int index3 = str.indexOf("World");    // 6
+int lastIndex = str.lastIndexOf('o'); // 7
+int lastIndex2 = str.lastIndexOf('o', 6); // 4 (search backward from index 6)
+
+// Checking content
+boolean starts = str.startsWith("Hello");   // true
+boolean ends = str.endsWith("World");       // true
+boolean contains = str.contains("lo W");    // true
+
+// Comparison
+String s1 = "Hello";
+String s2 = "hello";
+boolean eq1 = s1.equals(s2);           // false (case-sensitive)
+boolean eq2 = s1.equalsIgnoreCase(s2); // true (case-insensitive)
+int cmp = s1.compareTo(s2);            // -32 (negative, 'H' < 'h')
+int cmpIgnore = s1.compareToIgnoreCase(s2); // 0
+
+// Matching patterns
+boolean matches = str.matches("^Hello.*");  // true (regex)
+\end{verbatim}
+
+\section{String Building}
+\subsection{StringBuilder vs StringBuffer}
+\begin{verbatim}
+// StringBuilder (not thread-safe, faster for single thread)
+StringBuilder sb = new StringBuilder();
+sb.append("Hello");
+sb.append(" ");
+sb.append("World");
+sb.insert(5, ",");           // "Hello, World"
+sb.replace(5, 6, " ");       // "Hello World"
+sb.delete(5, 6);             // "HelloWorld"
+sb.reverse();                // "dlroW olleH"
+String result1 = sb.toString();
+
+// StringBuffer (thread-safe, synchronized, slower)
+StringBuffer buffer = new StringBuffer();
+buffer.append("Hello");
+buffer.append(" ");
+buffer.append("World");
+String result2 = buffer.toString();
+
+// Method chaining
+String str = new StringBuilder()
+    .append("Hello")
+    .append(" ")
+    .append("World")
+    .reverse()          // "dlroW olleH"
+    .toString();
+\end{verbatim}
+
+\subsection{Efficiency Considerations}
+\begin{verbatim}
+// INEFFICIENT: Creates many intermediate strings (O(n²) time)
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result += i;  // Creates new string each iteration
+}
+
+// EFFICIENT: Uses StringBuilder (O(n) time)
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);
+}
+String result = sb.toString();
+
+// Pre-sizing StringBuilder for large operations
+StringBuilder sb2 = new StringBuilder(10000);  // Initial capacity
+for (int i = 0; i < 10000; i++) {
+    sb2.append(i);
+}
+\end{verbatim}
+
+\section{String Formatting}
+\subsection{printf-style Formatting}
+\begin{verbatim}
+String name = "John";
+int age = 25;
+double salary = 50000.50;
+
+// Format string
+String formatted = String.format(
+    "Name: %s, Age: %d, Salary: $%,.2f", 
+    name, age, salary
+);
+// Result: "Name: John, Age: 25, Salary: $50,000.50"
+
+// Direct printing
+System.out.printf("Name: %s, Age: %d%n", name, age);
+
+// Common format specifiers:
+// %s - String
+// %d - Decimal integer
+// %f - Floating point (%.2f for 2 decimal places)
+// %c - Character
+// %b - Boolean
+// %n - New line (platform-independent)
+// %% - Percent sign
+// %t - Date/time
+// %, - Thousands separator
+
+// Padding and alignment
+System.out.printf("%-10s %5d%n", "John", 25);   // Left-aligned name
+System.out.printf("%10s %5d%n", "Jane", 30);    // Right-aligned
+\end{verbatim}
+
+\section{Regular Expressions}
+\subsection{Basic Patterns}
+\begin{verbatim}
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+String text = "The price is $19.99 and $29.50. Contact: info@example.com";
+
+// Pattern matching
+Pattern pricePattern = Pattern.compile("\\$\\d+\\.\\d{2}");
+Matcher priceMatcher = pricePattern.matcher(text);
+
+while (priceMatcher.find()) {
+    System.out.println("Found price: " + priceMatcher.group());
+}
+// Output: Found price: $19.99
+//         Found price: $29.50
+
+// Common validation patterns
+Pattern email = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+Pattern phone = Pattern.compile("^\\+?[\\d\\s-]{10,}$");
+Pattern date = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
+Pattern url = Pattern.compile("^(https?://)?([\\w-]+\\.)+[a-zA-Z]{2,}(/\\S*)?$");
+
+// Using String methods with regex
+String[] words = text.split("\\s+");  // Split by whitespace
+String cleaned = text.replaceAll("\\$", "");  // Remove dollar signs
+boolean hasDigits = text.matches(".*\\d+.*");  // Check if contains digits
+\end{verbatim}
+
+\section{Practical Applications}
+\subsection{Palindrome Check}
+\begin{verbatim}
+public boolean isPalindrome(String str) {
+    // Remove non-alphanumeric and convert to lowercase
+    String clean = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    
+    // Two-pointer approach
+    int left = 0;
+    int right = clean.length() - 1;
+    
+    while (left < right) {
+        if (clean.charAt(left) != clean.charAt(right)) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+
+// Alternative using StringBuilder
+public boolean isPalindrome2(String str) {
+    String clean = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    String reversed = new StringBuilder(clean).reverse().toString();
+    return clean.equals(reversed);
+}
+
+// Test cases
+isPalindrome("A man, a plan, a canal: Panama");  // true
+isPalindrome("race a car");                       // false
+isPalindrome(" ");                                // true (empty or whitespace)
+\end{verbatim}
+
+\subsection{Word Count}
+\begin{verbatim}
+import java.util.HashMap;
+import java.util.Map;
+
+public Map<String, Integer> wordCount(String text) {
+    Map<String, Integer> countMap = new HashMap<>();
+    
+    if (text == null || text.isBlank()) {
+        return countMap;
+    }
+    
+    // Split into words (handle punctuation and multiple spaces)
+    String[] words = text.toLowerCase()
+                         .replaceAll("[^a-z\\s]", " ")  // Replace non-letters with space
+                         .trim()                         // Remove leading/trailing spaces
+                         .split("\\s+");                 // Split by one or more spaces
+    
+    // Count occurrences
+    for (String word : words) {
+        countMap.put(word, countMap.getOrDefault(word, 0) + 1);
+    }
+    
+    return countMap;
+}
+
+// Enhanced version with stop words filtering
+public Map<String, Integer> wordCountWithFilter(String text, Set<String> stopWords) {
+    Map<String, Integer> countMap = new HashMap<>();
+    
+    String[] words = text.toLowerCase()
+                         .replaceAll("[^a-z\\s]", " ")
+                         .trim()
+                         .split("\\s+");
+    
+    for (String word : words) {
+        if (!stopWords.contains(word) && !word.isEmpty()) {
+            countMap.put(word, countMap.getOrDefault(word, 0) + 1);
+        }
+    }
+    
+    return countMap;
+}
+\end{verbatim}
+
+% Review Questions for Chapter 6
+\section*{Review Questions: Chapter 6}
+\begin{enumerate}
+    \item Explain string immutability and its implications for performance. How can StringBuilder help?
+    
+    \item Write a program that checks if two strings are anagrams of each other.
+    
+    \item Implement a method that compresses a string (e.g., "aaabbbccc" → "a3b3c3") but returns the original if compression doesn't help.
+    
+    \item Write a program that validates and parses an email address using regular expressions.
+    
+    \item Implement a simple template engine that replaces placeholders like \{\{name\}\} with values from a map.
+    
+    \item Write a program that counts word frequency in a text document.
+    
+    \item Explain the difference between String, StringBuilder, and StringBuffer.
+    
+    \item Write a program that formats a phone number from various input formats to a standard format.
+\end{enumerate}
+
+% ======================
+\chapter{Answers to Review Questions}
+% ======================
+
+\section{Chapter 1 Answers}
+\begin{enumerate}
+    \item \textbf{Compilation vs Interpretation}: 
+    Compiled languages are translated to machine code before execution (faster, platform-specific). Interpreted languages are executed line by line (slower, platform-independent). Java uses both: compiled to bytecode, then interpreted by JVM.
+    
+    \item \textbf{Java Process}: 
+    Source (.java) → Compiler (javac) → Bytecode (.class) → JVM → Execution. Hybrid because bytecode is compiled but needs JVM interpretation.
+    
+    \item \textbf{Memory Areas}:
+    \begin{itemize}
+        \item Stack: Local variables, method calls
+        \item Heap: Objects, dynamic allocation
+        \item Static: Class variables, constants
+        \item Code: Program instructions
+    \end{itemize}
+    
+    \item \textbf{Syntax, Semantics, Pragmatics}:
+    \begin{itemize}
+        \item Syntax: \texttt{if (x > 0) \{\}} - correct structure
+        \item Semantics: \texttt{x > 0} means "x is positive"
+        \item Pragmatics: Using meaningful variable names, proper formatting
+    \end{itemize}
+    
+    \item \textbf{JVM Purpose}: 
+    Executes bytecode, provides memory management, security, platform abstraction, garbage collection.
+    
+    \item \textbf{Bytecode}: 
+    Intermediate representation between source and machine code, platform-independent, executed by JVM.
+    
+    \item \textbf{Java Program Components}:
+    \begin{itemize}
+        \item \texttt{class}: Defines object blueprint
+        \item \texttt{main}: Program entry point
+        \item \texttt{public}: Access modifier (JVM can call it)
+        \item \texttt{static}: Class-level method (no object needed)
+        \item \texttt{void}: No return value
+        \item \texttt{String[] args}: Command-line arguments array
+    \end{itemize}
+\end{enumerate}
+
+\section{Chapter 2 Answers}
+\begin{enumerate}
+    \item \textbf{Variable Scopes}:
+    \begin{itemize}
+        \item Local: Inside method/block, accessible only within
+        \item Instance: Non-static fields, each object has its own copy
+        \item Class: Static fields, shared across all objects
+        \item Use instance for object state, class for shared data, local for temporary values
+    \end{itemize}
+    
+    \item \textbf{Primitive vs Reference}:
+    \begin{itemize}
+        \item Primitives: Store values directly (stack), 8 types, faster
+        \item References: Store memory addresses (heap), point to objects, can be null
+        \item Implications: Primitives use less memory, references enable complex structures
+    \end{itemize}
+    
+    \item \textbf{Expression Evaluation}:
+    \texttt{5 + 3 * 2 / (4 - 2)} = 
+    \texttt{5 + 3 * 2 / 2} = 
+    \texttt{5 + 6 / 2} = 
+    \texttt{5 + 3} = 8
+    
+    \item \textbf{Compound Assignment}:
+    \begin{verbatim}
+    int x = 10;
+    x += 5;   // x = 15
+    x -= 3;   // x = 12
+    x *= 2;   // x = 24
+    x /= 4;   // x = 6
+    x %= 5;   // x = 1
+    x <<= 2;  // x = 4 (bitwise left shift)
+    x >>= 1;  // x = 2 (bitwise right shift)
+    \end{verbatim}
+    
+    \item \textbf{Type Casting}:
+    \begin{itemize}
+        \item Implicit: Widening conversions (int to double, byte to int)
+        \item Explicit: Narrowing conversions (double to int, long to short)
+        \item Required when information loss possible or incompatible types
+    \end{itemize}
+    
+    \item \textbf{Type Conversions}:
+    \begin{verbatim}
+    // int to double
+    int i = 42;
+    double d = i;           // Implicit
+    
+    // double to int
+    double price = 19.99;
+    int intPrice = (int) price;  // Explicit, truncates to 19
+    
+    // char to int
+    char c = 'A';
+    int ascii = c;                // 65
+    
+    // boolean to String
+    boolean flag = true;
+    String s = String.valueOf(flag);  // "true"
+    \end{verbatim}
+\end{enumerate}
+
+\section{Chapter 3 Answers}
+\begin{enumerate}
+    \item \textbf{Boolean Simplification}:
+    \texttt{!(a \&\& b) || (!a \&\& !b) || (a \&\& !b)} 
+    Using De Morgan: \texttt{(!a || !b) || (!a \&\& !b) || (a \&\& !b)}
+    Distributive: \texttt{!a || !b || (!a \&\& !b) || (a \&\& !b)}
+    Simplifies to: \texttt{!a || !b}
+    
+    \item \textbf{Find Maximum}:
+    \begin{verbatim}
+    int max = a;
+    if (b > max) max = b;
+    if (c > max) max = c;
+    return max;
+    
+    // Alternative using ternary
+    int max = (a > b) ? (a > c ? a : c) : (b > c ? b : c);
+    \end{verbatim}
+    
+    \item \textbf{Equality Types}:
+    \begin{itemize}
+        \item Shallow equality: Compares references (==)
+        \item Deep equality: Compares content (equals() method)
+        \item Strings: Use equals() for content comparison, == for reference comparison
+    \end{itemize}
+    
+    \item \textbf{Date Validation}:
+    \begin{verbatim}
+    boolean isValidDate(int day, int month, int year) {
+        if (year < 1 || month < 1 || month > 12) return false;
+        
+        int[] daysInMonth = {31,28,31,30,31,30,31,31,30,31,30,31};
+        
+        // Leap year check
+        boolean isLeapYear = (year % 400 == 0) || 
+                            (year % 4 == 0 && year % 100 != 0);
+        if (isLeapYear) daysInMonth[1] = 29;
+        
+        return day >= 1 && day <= daysInMonth[month-1];
+    }
+    \end{verbatim}
+\end{enumerate}
+
+\section{Chapter 4 Answers}
+\begin{enumerate}
+    \item \textbf{Loop Comparison}:
+    \begin{itemize}
+        \item for: Known iterations, counter-based
+        \item while: Condition-based, may execute zero times
+        \item do-while: Condition-based, executes at least once
+    \end{itemize}
+    
+    \item \textbf{Fibonacci}:
+    \begin{verbatim}
+    // Using for loop
+    int a=0, b=1;
+    System.out.print(a + " " + b + " ");
+    for(int i=2; i<20; i++) {
+        int c = a + b;
+        System.out.print(c + " ");
+        a = b;
+        b = c;
+    }
+    
+    // Using while
+    int a=0, b=1, count=2;
+    System.out.print(a + " " + b + " ");
+    while(count < 20) {
+        int c = a + b;
+        System.out.print(c + " ");
+        a = b;
+        b = c;
+        count++;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Bubble Sort Analysis}:
+    \begin{itemize}
+        \item Time complexity: O(n²) worst and average case, O(n) best case (already sorted)
+        \item Space complexity: O(1) in-place
+        \item Stable: Equal elements maintain relative order
+    \end{itemize}
+    
+    \item \textbf{Sieve of Eratosthenes}:
+    \begin{verbatim}
+    boolean[] isPrime = new boolean[101];
+    Arrays.fill(isPrime, true);
+    isPrime[0] = isPrime[1] = false;
+    
+    for(int i=2; i*i<=100; i++) {
+        if(isPrime[i]) {
+            for(int j=i*i; j<=100; j+=i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+    
+    for(int i=2; i<=100; i++) {
+        if(isPrime[i]) System.out.print(i + " ");
+    }
+    \end{verbatim}
+    
+    \item \textbf{Loop Optimization}:
+    \begin{itemize}
+        \item Loop invariant code motion: Move calculations outside loop
+        \item Loop unrolling: Process multiple elements per iteration
+        \item Strength reduction: Replace expensive operations with cheaper ones
+        \item Loop fusion: Combine adjacent loops
+    \end{itemize}
+    
+    \item \textbf{Factorial Comparison}:
+    \begin{itemize}
+        \item Iterative: O(n) time, O(1) space, more efficient
+        \item Recursive: O(n) time, O(n) space (call stack), simpler code
+        \item Iterative preferred for performance and stack overflow prevention
+    \end{itemize}
+    
+    \item \textbf{Array Reversal}:
+    \begin{verbatim}
+    void reverseArray(int[] arr) {
+        int left = 0, right = arr.length-1;
+        while(left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+    \end{verbatim}
+    
+    \item \textbf{Binary Search vs Linear}:
+    \begin{itemize}
+        \item Linear search: O(n) time, works on unsorted arrays
+        \item Binary search: O(log n) time, requires sorted array
+        \item Binary search 100x faster for 1,000,000 elements
+    \end{itemize}
+\end{enumerate}
+
+\section{Chapter 5 Answers}
+\begin{enumerate}
+    \item \textbf{Arrays vs ArrayLists}:
+    \begin{itemize}
+        \item Arrays: Fixed size, better performance, direct primitive support
+        \item ArrayLists: Dynamic size, rich API, requires object wrappers for primitives
+        \item Choose arrays for performance-critical code, ArrayLists when size changes frequently
+    \end{itemize}
+    
+    \item \textbf{Array Rotation}:
+    \begin{verbatim}
+    void rotateRight(int[] arr, int k) {
+        k = k % arr.length;
+        reverse(arr, 0, arr.length-1);
+        reverse(arr, 0, k-1);
+        reverse(arr, k, arr.length-1);
+    }
+    
+    void reverse(int[] arr, int start, int end) {
+        while(start < end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+    \end{verbatim}
+    
+    \item \textbf{Most Frequent Element}:
+    \begin{verbatim}
+    int mostFrequent(int[] arr) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        int maxFreq = 0, mostFreq = arr[0];
+        
+        for(int num : arr) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+            if(freq.get(num) > maxFreq) {
+                maxFreq = freq.get(num);
+                mostFreq = num;
+            }
+        }
+        return mostFreq;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Kadane's Algorithm}:
+    \begin{verbatim}
+    int maxSubArray(int[] nums) {
+        int maxSoFar = nums[0];
+        int maxEndingHere = nums[0];
+        
+        for(int i=1; i<nums.length; i++) {
+            maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
+        }
+        return maxSoFar;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Merge Sorted Arrays}:
+    \begin{verbatim}
+    int[] merge(int[] a, int[] b) {
+        int[] result = new int[a.length + b.length];
+        int i=0, j=0, k=0;
+        
+        while(i < a.length && j < b.length) {
+            result[k++] = (a[i] <= b[j]) ? a[i++] : b[j++];
+        }
+        
+        while(i < a.length) result[k++] = a[i++];
+        while(j < b.length) result[k++] = b[j++];
+        
+        return result;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Multi-dimensional Storage}:
+    \begin{itemize}
+        \item Java uses row-major order: elements of each row stored contiguously
+        \item 2D array is array of arrays: each row can have different length (jagged)
+        \item Memory address calculation: base + (row * cols + col) * elementSize
+    \end{itemize}
+\end{enumerate}
+
+\section{Chapter 6 Answers}
+\begin{enumerate}
+    \item \textbf{String Immutability}:
+    \begin{itemize}
+        \item Strings cannot be modified after creation
+        \item Operations create new strings, leading to performance issues
+        \item StringBuilder provides mutable alternative for concatenation-heavy code
+    \end{itemize}
+    
+    \item \textbf{Anagram Check}:
+    \begin{verbatim}
+    boolean isAnagram(String s1, String s2) {
+        if(s1.length() != s2.length()) return false;
+        
+        char[] c1 = s1.toLowerCase().toCharArray();
+        char[] c2 = s2.toLowerCase().toCharArray();
+        
+        Arrays.sort(c1);
+        Arrays.sort(c2);
+        
+        return Arrays.equals(c1, c2);
+    }
+    \end{verbatim}
+    
+    \item \textbf{String Compression}:
+    \begin{verbatim}
+    String compress(String str) {
+        if(str.length() <= 2) return str;
+        
+        StringBuilder compressed = new StringBuilder();
+        int count = 1;
+        
+        for(int i=1; i<str.length(); i++) {
+            if(str.charAt(i) == str.charAt(i-1)) {
+                count++;
+            } else {
+                compressed.append(str.charAt(i-1)).append(count);
+                count = 1;
+            }
+        }
+        compressed.append(str.charAt(str.length()-1)).append(count);
+        
+        return compressed.length() < str.length() ? 
+               compressed.toString() : str;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Email Validation}:
+    \begin{verbatim}
+    boolean isValidEmail(String email) {
+        return email != null && 
+               email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    }
+    \end{verbatim}
+    
+    \item \textbf{Template Engine}:
+    \begin{verbatim}
+    String renderTemplate(String template, Map<String, String> data) {
+        String result = template;
+        for(Map.Entry<String, String> entry : data.entrySet()) {
+            String placeholder = "{{" + entry.getKey() + "}}";
+            result = result.replace(placeholder, entry.getValue());
+        }
+        return result;
+    }
+    \end{verbatim}
+    
+    \item \textbf{Word Frequency}:
+    \begin{verbatim}
+    Map<String, Integer> wordFrequency(String text) {
+        Map<String, Integer> freq = new HashMap<>();
+        String[] words = text.toLowerCase()
+                            .replaceAll("[^a-z\\s]", " ")
+                            .trim()
+                            .split("\\s+");
+        
+        for(String word : words) {
+            if(!word.isEmpty()) {
+                freq.put(word, freq.getOrDefault(word, 0) + 1);
+            }
+        }
+        return freq;
+    }
+    \end{verbatim}
+    
+    \item \textbf{String, StringBuilder, StringBuffer}:
+    \begin{itemize}
+        \item String: Immutable, thread-safe, stored in string pool
+        \item StringBuilder: Mutable, not thread-safe, faster for single thread
+        \item StringBuffer: Mutable, thread-safe (synchronized), slightly slower
+    \end{itemize}
+    
+    \item \textbf{Phone Formatter}:
+    \begin{verbatim}
+    String formatPhone(String phone) {
+        String digits = phone.replaceAll("\\D", "");
+        
+        if(digits.length() == 10) {
+            return String.format("(%s) %s-%s",
+                digits.substring(0, 3),
+                digits.substring(3, 6),
+                digits.substring(6));
+        } else if(digits.length() == 11 && digits.startsWith("1")) {
+            return String.format("+1 (%s) %s-%s",
+                digits.substring(1, 4),
+                digits.substring(4, 7),
+                digits.substring(7));
+        }
+        return phone; // Return original if format not recognized
+    }
+    \end{verbatim}
+\end{enumerate}
+
+\end{document}
