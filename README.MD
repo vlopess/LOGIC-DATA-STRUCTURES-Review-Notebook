@@ -1,4 +1,3 @@
-
 # Logic & Data Structures
 
 An introductory book on programming, logic, and data structures using Java.
@@ -21,8 +20,8 @@ This book covers programming fundamentals from basic concepts to essential data 
 
 ## Download
 
-- [English Version](Logic_Data_Structures_EN.pdf)
-- [Portuguese Version](Logic_Data_Structures_PT.pdf)
+- [English Version](/Logic_Data_Structures_EN.pdf)
+- [Portuguese Version](/Logic_Data_Structures_PT.pdf)
 
 ## Audience
 
