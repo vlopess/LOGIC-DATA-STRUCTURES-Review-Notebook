@@ -23,17 +23,6 @@ This book covers programming fundamentals from basic concepts to essential data 
 - [English Version](/Logic_Data_Structures_EN.pdf)
 - [Portuguese Version](/Logic_Data_Structures_PT.pdf)
 
-## Audience
-
-- Computer science students
-- Programming beginners
-- Self-learners wanting to learn Java
-- Teachers looking for educational material
-
-## License
-
-Educational use - feel free to use for learning and teaching purposes.
-
 ---
 
 *Developed for programming education*
